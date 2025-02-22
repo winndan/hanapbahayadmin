@@ -1,6 +1,6 @@
 from fasthtml.common import *
 from monsterui.all import *
-from dashboard.dashboard import admin_dash
+from dashboard.admin import admin_dash
 from homepage.homepage import homepage
 
 
