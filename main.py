@@ -1,6 +1,7 @@
 from fasthtml.common import *
 from monsterui.all import *
 from dashboard.dashboard import admin_dash
+from homepage.homepage import homepage
 
 
 app, rt = fast_app(hdrs=Theme.slate.headers(daisy=True), live=True)
@@ -10,7 +11,7 @@ app, rt = fast_app(hdrs=Theme.slate.headers(daisy=True), live=True)
 
 @rt("/")
 async def get_homepage():
-    return P("Home testing")
+    return homepage()
 
 
 @rt("/admin")
