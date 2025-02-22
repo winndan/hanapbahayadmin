@@ -2,7 +2,6 @@ from fasthtml.common import *  # Import FastHTML components
 import fasthtml.common as fh  # Used to get unstyled components
 from monsterui.all import *  # Import MonsterUI for styled components
 from fasthtml.svg import *
-import pandas as pd
 
 def InfoCard(title, value, change):
     return Card(H3(value), P(change, cls=TextPresets.muted_sm), header=H4(title))

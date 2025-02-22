@@ -2,4 +2,3 @@ supabase
 python-dotenv
 python-fasthtml
 monsterUi
-pandas
