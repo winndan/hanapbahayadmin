@@ -1,0 +1,7 @@
+supabase
+python-dotenv
+python-fasthtml
+monsterUi
+numpy
+pandas
+plotly
