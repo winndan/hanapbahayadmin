@@ -38,34 +38,45 @@ recent_sales = Card(
     cls='col-span-3'
 )
 
-hotkeys = [('Profile', '⇧⌘P'), ('Billing', '⌘B'), ('Settings', '⌘S'), ('New Team', ''), ('Logout', '')]
-
-def NavSpacedLi(t, s):
-    return NavCloseLi(A(DivFullySpaced(P(t), P(s, cls=TextPresets.muted_sm))))
-
-avatar_dropdown = Div(
-    DiceBearAvatar('Alicia Koch', 8, 8),
-    DropDownNavContainer(
-        NavHeaderLi('sveltecult', NavSubtitle("leader@sveltecult.com")),
-        *[NavSpacedLi(*hk) for hk in hotkeys],
+def OverviewTab():
+    return Div(
+        H2("Dashboard Overview"),
+        top_info_row,
+        recent_sales
     )
-)
 
-top_nav = NavBar(brand=DivLAligned(avatar_dropdown))
+
+    
+def NavSpacedLi(t,s): return NavCloseLi(A(DivFullySpaced(P(t),P(s,cls=TextPresets.muted_sm))))
+avatar_dropdown = Div(
+      DiceBearAvatar('Alicia Koch',8,8),
+      DropDownNavContainer(
+          NavHeaderLi('sveltecult',NavSubtitle("leader@sveltecult.com")),
+          ))
+
+
+top_nav = NavBar(
+     *map(lambda text: Button(
+    text, 
+    cls=ButtonT.ghost, 
+    hx_get="/profile" if text == "Profile" else None,  # Load Profile Page with HTMX
+    hx_post="/logout" if text == "Logout" else None,  # Logout with HTMX
+    hx_target="body" if text == "Logout" else None  # Apply HTMX response to the body (optional)
+), ["Profile", "Logout"]),
+    brand=DivLAligned(avatar_dropdown))
+
+
 
 def admin_dash():
     return Title("Dashboard Example"), Container(
         top_nav,
-        H2('Dashboard'),
         TabContainer(
-            Li(A("Overview"), cls='uk-active'),
-            *map(lambda x: Li(A(x)), ["Analytics", "Reports", "Notifications"]),
+            Li(A("Overview", href="#", hx_get="/tabs/overview", hx_target="#tab-content", cls='uk-active')),
+            Li(A("Analytics", href="#", hx_get="/tabs/analytics", hx_target="#tab-content")),
+            Li(A("Reports", href="#", hx_get="/tabs/reports", hx_target="#tab-content")),
+            Li(A("Notifications", href="#", hx_get="/tabs/notifications", hx_target="#tab-content")),
             alt=True
         ),
-        top_info_row,
-        Grid(
-            recent_sales,  # Removed Plotly chart
-            gap=4, cols_xl=7, cols_lg=7, cols_md=1, cols_sm=1, cols_xs=1
-        ),
+        Div(OverviewTab(), id="tab-content"),  # Default content
         cls=('space-y-4', ContainerT.xl)
     )
