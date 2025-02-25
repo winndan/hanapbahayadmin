@@ -15,9 +15,7 @@ key: str = os.getenv('supa_key')
 
 supabase: Client = create_client(url, key)
 
-app, rt = fast_app(hdrs=Theme.slate.headers(daisy=True), live=True)
 
-@rt("/")
 def booking_table():
     """Fetch and display the latest 10 bookings, excluding `id` from the table."""
     response = (
@@ -70,7 +68,6 @@ def booking_table():
         cls="table-auto w-full border-collapse border border-gray-300"
     )
 
-@rt("/update_status/{booking_id}", methods=["PATCH"])
 async def update_status(booking_id: UUID, req):
     """Handle PATCH request to update booking status."""
     try:
@@ -101,4 +98,4 @@ async def update_status(booking_id: UUID, req):
     except Exception as e:
         return Alert(f"Error: {str(e)}", cls=AlertT.error)
 
-serve()
+

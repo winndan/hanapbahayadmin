@@ -15,9 +15,7 @@ key: str = os.getenv('supa_key')
 
 supabase: Client = create_client(url, key)
 
-# Initialize FastHTML app
-app, rt = fast_app(hdrs=Theme.slate.headers(daisy=True), live=True)
-@rt("/")
+
 def room_Table():
     # Fetch all records (remove `.limit(5)`)
     response = (
@@ -79,7 +77,6 @@ def room_Table():
 
 
 
-@rt("/delete/{room_number}")
 def delete(room_number: int):
     """Handle DELETE request for a room."""
     try:
@@ -93,5 +90,3 @@ def delete(room_number: int):
         return Alert(f"Error: {str(e)}", cls=AlertT.error)
 
 
-
-serve()
