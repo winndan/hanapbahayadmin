@@ -7,16 +7,14 @@ from supabase import create_client, Client
 from uuid import UUID, uuid4
 from datetime import date
 import re  # For phone number validation
+from db_connection import supabase as db
 
 # ==============================
 # 📌 Load Environment Variables
 # ==============================
-load_dotenv()
 
-url: str = os.getenv('supa_url')
-key: str = os.getenv('supa_key')
 
-supabase: Client = create_client(url, key)
+supabase = db
 
 # ==============================
 # 📌 Initialize FastHTML App

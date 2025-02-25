@@ -6,13 +6,14 @@ from dotenv import load_dotenv
 from supabase import create_client, Client
 from uuid import UUID, uuid4
 
-# Load environment variables
-load_dotenv()
+from db_connection import supabase as db
 
-url: str = os.getenv('supa_url')
-key: str = os.getenv('supa_key')
+# ==============================
+# 📌 Load Environment Variables
+# ==============================
 
-supabase: Client = create_client(url, key)
+
+supabase = db
 
 BUCKET_NAME = "room-images"
 ROOM_TYPES = ["Standard", "Family", "Deluxe"]
