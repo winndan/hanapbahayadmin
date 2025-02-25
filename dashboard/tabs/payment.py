@@ -2,7 +2,7 @@ from fasthtml.common import *  # Import FastHTML components# Used to get unstyle
 from monsterui.all import *  # Import MonsterUI for styled components
 from fasthtml.svg import *
 
-def AnalyticsTab():
+def PaymentTab():
     return Div(
-        H2("Anal Overview")
+        H2("Nof Overview")
     )

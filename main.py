@@ -3,9 +3,12 @@ from monsterui.all import *
 from dashboard.admin import admin_dash
 from homepage.homepage import homepage
 from dashboard.tabs.overview import OverviewTab
-from dashboard.tabs.analytics import AnalyticsTab
-from dashboard.tabs.reports import ReportsTab
-from dashboard.tabs.notifications import NotificationsTab
+from dashboard.tabs.book import BookTab
+from dashboard.forms.bookings import submit_booking
+from dashboard.forms.rooms import submit_rooms
+from dashboard.tabs.room import RoomTab
+from dashboard.tabs.payment import PaymentTab
+
 
 
 
@@ -27,17 +30,28 @@ async def admin_page():
 async def overview():
     return OverviewTab()
 
-@rt("/tabs/analytics")
-async def analytics():
-    return AnalyticsTab()
+@rt("/tabs/book")
+async def books():
+    return BookTab()
 
-@rt("/tabs/reports")
-async def reports():
-    return ReportsTab()
+@rt("/tabs/room")
+async def rooms():
+    return RoomTab()
 
-@rt("/tabs/notifications")
-async def notifications():
-    return NotificationsTab()
+@rt("/tabs/payment")
+async def payment():
+    return PaymentTab()
+
+# backend
+
+@rt("/submit_booking", methods=["POST"])
+async def submitBook(req):
+    return await submit_booking(req)
+
+@rt("/submit_room", methods=["POST"])
+async def submitRoom(req):
+    return await submit_rooms(req)
+
 
 if __name__ == "__main__":
     serve()
