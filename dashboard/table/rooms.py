@@ -16,7 +16,7 @@ key: str = os.getenv('supa_key')
 supabase: Client = create_client(url, key)
 
 
-def room_Table():
+def room_table():
     # Fetch all records (remove `.limit(5)`)
     response = (
         supabase.table("rooms")

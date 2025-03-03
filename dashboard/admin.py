@@ -4,7 +4,9 @@ from fasthtml.svg import *
 from dashboard.tabs.overview import OverviewTab
 from dashboard.tabs.book import BookTab
 from dashboard.tabs.room import RoomTab
-from dashboard.tabs.payment import PaymentTab
+from dashboard.tabs.book_data import BookData
+from dashboard.tabs.room_data import RoomData
+
 
 # ✅ Custom Spaced List Item
 def NavSpacedLi(t, s): 
@@ -14,7 +16,7 @@ def NavSpacedLi(t, s):
 avatar_dropdown = Div(
     DiceBearAvatar('Alicia Koch', 8, 8),
     DropDownNavContainer(
-        NavHeaderLi('sveltecult', NavSubtitle("leader@sveltecult.com")),
+        NavHeaderLi('Admin Account'),
     )
 )
 
@@ -23,10 +25,9 @@ top_nav = NavBar(
     *map(lambda text: Button(
         text, 
         cls=ButtonT.ghost, 
-        hx_get="/profile" if text == "Profile" else None,  
         hx_post="/logout" if text == "Logout" else None,  
         hx_target="body" if text == "Logout" else None  
-    ), ["Profile", "Logout"]),
+    ), ["Logout"]),
     brand=DivLAligned(avatar_dropdown)
 )
 
@@ -34,9 +35,10 @@ top_nav = NavBar(
 def load_tab_content(tab):
     tabs = {
         "overview": OverviewTab,
-        "book": BookTab,
-        "room": RoomTab,
-        "payment": PaymentTab
+        "add-book": BookTab,
+        "add-room": RoomTab,
+        "book-data": BookData,
+        "room-data": RoomData
     }
     return tabs.get(tab, lambda: H1("Tab Not Found"))()  
 
@@ -48,16 +50,19 @@ def admin_dash(active_tab="overview"):
             TabContainer(
                 Li(A("Overview",  
                       href="#", hx_get=f"/admin?tab=overview", hx_target="#admin-content", hx_push_url="true",
-                      cls=f"px-4 py-2 {'uk-active bg-blue-500 text-white' if active_tab == 'overview' else 'hover:bg-gray-200'}")),
-                Li(A("Booking",  
-                      href="#", hx_get=f"/admin?tab=book", hx_target="#admin-content", hx_push_url="true",
-                      cls=f"px-4 py-2 {'uk-active bg-blue-500 text-white' if active_tab == 'book' else 'hover:bg-gray-200'}")),
-                Li(A("Room",  
-                      href="#", hx_get=f"/admin?tab=room", hx_target="#admin-content", hx_push_url="true",
-                      cls=f"px-4 py-2 {'uk-active bg-blue-500 text-white' if active_tab == 'room' else 'hover:bg-gray-200'}")),
-                Li(A("Payment",  
-                      href="#", hx_get=f"/admin?tab=payment", hx_target="#admin-content", hx_push_url="true",
-                      cls=f"px-4 py-2 {'uk-active bg-blue-500 text-white' if active_tab == 'payment' else 'hover:bg-gray-200'}")),
+                      cls=f"px-4 py-2 {'uk-active bg-slate-500 text-white' if active_tab == 'overview' else 'hover:bg-gray-200'}")),
+                Li(A("Add Book",  
+                      href="#", hx_get=f"/admin?tab=add-book", hx_target="#admin-content", hx_push_url="true",
+                      cls=f"px-4 py-2 {'uk-active bg-slate-500 text-white' if active_tab == 'add-book' else 'hover:bg-gray-200'}")),
+                Li(A("Add Room",  
+                      href="#", hx_get=f"/admin?tab=add-room", hx_target="#admin-content", hx_push_url="true",
+                      cls=f"px-4 py-2 {'uk-active bg-slate-500 text-white' if active_tab == 'add-room' else 'hover:bg-gray-200'}")),
+                Li(A("Book Data",  
+                      href="#", hx_get=f"/admin?tab=book-data", hx_target="#admin-content", hx_push_url="true",
+                      cls=f"px-4 py-2 {'uk-active bg-slate-500 text-white' if active_tab == 'book-data' else 'hover:bg-gray-200'}")),
+                Li(A("Room Data",  
+                      href="#", hx_get=f"/admin?tab=room-data", hx_target="#admin-content", hx_push_url="true",
+                      cls=f"px-4 py-2 {'uk-active bg-slate-500 text-white' if active_tab == 'room-data' else 'hover:bg-gray-200'}")),
                 alt=True
             ),
             Div(load_tab_content(active_tab), id="tab-content"),  

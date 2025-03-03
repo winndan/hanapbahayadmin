@@ -1,8 +1,13 @@
 from fasthtml.common import *  # Import FastHTML components# Used to get unstyled components
 from monsterui.all import *  # Import MonsterUI for styled components
 from fasthtml.svg import *
+from dashboard.table.bookings import booking_table
+from dashboard.table.rooms import room_table
 
-def PaymentTab():
+
+def RoomData():
     return Div(
-        H2("Nof Overview")
+        room_table(),
+        cls="p-4 overflow-auto w-full"
     )
+
