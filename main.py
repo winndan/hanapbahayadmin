@@ -7,6 +7,7 @@ from dashboard.forms.rooms import submit_rooms
 from dashboard.forms.bookings import submit_booking
 from dashboard.table.bookings import update_status
 from uuid import UUID, uuid4
+from auths.frontend.signin import login_page
 
 
 
@@ -19,10 +20,11 @@ def before(req):
     if not auth:
         return Redirect("/")  # ✅ Redirect to login page
     
-bware = Beforeware(before, skip=['/', '/login', 'logout'])
+bware = Beforeware(before, skip=['/', '/login', '/logout', '/assets/favicon.ico','/assets/logo-bg.png'])
+
 
 # ✅ Assign `before` function directly
-app, rt = fast_app(hdrs=Theme.slate.headers(daisy=True), live=True, before=bware)
+app, rt = fast_app(hdrs=Theme.blue.headers(daisy=True), live=True, before=bware)
 
 
 # 🔹 Function to authenticate users
@@ -55,21 +57,7 @@ def login_admin(email: str, password: str, session):
 # 🔹 Login Page
 @rt("/")
 def index():
-    return Container(
-        Title("Admin Login"),
-        Form(
-            Div(
-                Input(type="email", name="email", placeholder="Email", cls="border p-2 w-full"),
-                Input(type="password", name="password", placeholder="Password", cls="border p-2 w-full"),
-                Button("Login", type="submit", cls="bg-blue-500 text-black p-2 w-full"),
-                cls="space-y-4"
-            ),
-            hx_post="/login", hx_target="#response", cls="bg-black p-6 rounded-lg shadow-md w-80"
-        ),
-        Div(id="response", cls="mt-4 text-center"),
-        cls="flex justify-center items-center min-h-screen bg-gray-100"
-    )
-
+    return login_page()
 # 🔹 Login Route
 @rt("/login")
 def login(req, email: str = Form(...), password: str = Form(...)):
